@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+function docker_compose_install {
+  cache curl "docker-compose-1.7.1" "https://github.com/docker/compose/releases/download/1.7.1/docker-compose-$(uname -s)-$(uname -m)"
+  rsync -ia "${BASEBOX_CACHE}/curl/docker-compose-1.7.1" "$shome/bin/docker-compose"
+  chmod +x "$shome/bin/docker-compose"
+}
+
+function bootstrap {
+  local shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
+  source "$shome/script/profile"
+
+  case "$(uname -s)" in
+    Linux)
+      docker_compose_install 
+      ;;
+  esac
+}
+
+bootstrap
