@@ -4,11 +4,19 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  if [[ "$($shome/script/version | jq -r '.docker_compose')" != "$DOCKER_COMPOSE_VERSION" ]]; then
-    return 1
-  fi
+  case "$(uname -s)" in
+    Darwin)
+      return 0
+      ;;
 
-  return 0
+    Linux)
+      if [[ "$($shome/script/version | jq -r '.docker_compose')" != "$DOCKER_COMPOSE_VERSION" ]]; then
+        return 1
+      fi
+
+      return 0
+      ;;
+  esac
 }
 
 main "$@"
