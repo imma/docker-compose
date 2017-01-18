@@ -7,7 +7,7 @@ function version {
   local ver_compose="$(docker-compose --version 2>/dev/null | awk 'NR == 1 {print $3}' | perl -pe 's{,$}{}' || true)"
   jq -n \
     --arg compose "$ver_compose" \
-    '{"docker-compose": $compose}'
+    '{"docker_compose": $compose}'
 }
 
 version "$@"
