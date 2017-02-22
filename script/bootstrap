@@ -12,7 +12,7 @@ function bootstrap {
   source "$shome/script/profile"
 
   case "$(uname -s)" in
-    Linux)
+    Darwin|Linux)
       docker_compose_install 
       ;;
   esac
