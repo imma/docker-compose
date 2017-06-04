@@ -3,7 +3,7 @@
 function docker_compose_install {
   local fnm_compose="docker-compose-${DOCKER_COMPOSE_VERSION}-$(uname -s)-$(uname -m)"
   cache curl "$fnm_compose" "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)"
-  rsync -ia "${BASEBOX_CACHE}/curl/$fnm_compose" "$shome/bin/docker-compose"
+  rsync -ia "/data/cache/curl/$fnm_compose" "$shome/bin/docker-compose"
   chmod +x "$shome/bin/docker-compose"
 }
 
