@@ -4,7 +4,7 @@ function _docker_compose_profile {
   local shome="${_docker_compose_home:="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"}"
   PATH="$shome/bin:$PATH"
 
-  DOCKER_COMPOSE_VERSION='1.15.0'
+  DOCKER_COMPOSE_VERSION='1.16.0'
 }
 
 _docker_compose_profile
