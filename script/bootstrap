@@ -1,21 +1,13 @@
 #!/usr/bin/env bash
 
-function docker_compose_install {
-  local fnm_compose="docker-compose-${DOCKER_COMPOSE_VERSION}-$(uname -s)-$(uname -m)"
-  cache curl "$fnm_compose" "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)"
-  rsync -ia "${CACHE_DIR}/curl/$fnm_compose" "$shome/bin/docker-compose"
-  chmod +x "$shome/bin/docker-compose"
-}
-
 function bootstrap {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  case "$(uname -s)" in
-    Darwin|Linux)
-      docker_compose_install 
-      ;;
-  esac
+  local fnm_compose="docker-compose-${DOCKER_COMPOSE_VERSION}-$(uname -s)-$(uname -m)"
+  cache curl "$fnm_compose" "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)"
+  rsync -ia "${CACHE_DIR}/curl/$fnm_compose" "$shome/bin/docker-compose"
+  chmod +x "$shome/bin/docker-compose"
 }
 
 bootstrap
