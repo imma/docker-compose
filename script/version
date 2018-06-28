@@ -5,9 +5,11 @@ function version {
   source "$shome/script/profile"
 
   local ver_compose="$(docker-compose --version 2>/dev/null | awk 'NR == 1 {print $3}' | perl -pe 's{,$}{}' || true)"
+  local ver_app="$(docker-app version 2>/dev/null | grep Version | awk '{print $2}' | perl -pe 's{^v}{}' || true)"
   jq -n \
     --arg compose "$ver_compose" \
-    '{"docker_compose": $compose}'
+    --arg app "$ver_app" \
+    '{docker_compose: $compose, docker_app: $app}'
 }
 
 version "$@"

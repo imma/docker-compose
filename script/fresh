@@ -7,6 +7,10 @@ function main {
   if [[ "$($shome/script/version | jq -r '.docker_compose')" != "$DOCKER_COMPOSE_VERSION" ]]; then
     return 1
   fi
+
+  if [[ "$($shome/script/version | jq -r '.docker_app')" != "$DOCKER_APP_VERSION" ]]; then
+    return 1
+  fi
 }
 
 main "$@"
