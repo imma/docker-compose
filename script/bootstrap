@@ -8,6 +8,14 @@ function bootstrap {
   cache curl "$fnm_compose" "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)"
   rsync -ia "${CACHE_DIR}/curl/$fnm_compose" "$shome/bin/docker-compose"
   chmod +x "$shome/bin/docker-compose"
+
+  local fnm_app="docker-app-${DOCKER_APP_VERSION}-$(uname -s | tr '[:upper:]' '[:lower:]' ).tar.gz"
+  cache curl "$fnm_app" "https://github.com/docker/app/releases/download/v${DOCKER_APP_VERSION}/docker-app-$(uname -s | tr '[:upper:]' '[:lower:]' ).tar.gz"
+  mkdir -p "$shome/vendor/docker-app-${DOCKER_APP_VERSION}"
+  (cd "$shome/vendor/docker-app-${DOCKER_APP_VERSION}" && tar xfz "${CACHE_DIR}/curl/$fnm_app")
+  (set +f; mv "$shome/vendor/docker-app-${DOCKER_APP_VERSION}"/docker-app-* "$shome/bin/docker-app")
+  chmod 755 "$shome/bin/docker-app"
+  rm -rf "$shome/vendor/docker-app-${DOCKER_APP_VERSION}"
 }
 
 bootstrap
